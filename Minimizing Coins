@@ -1,0 +1,103 @@
+//This is Recursion for Minimizing the Coins
+//The braching factor in the recursion tree is the number of coins Hence Time complexity is O(n^n) beleiving the n is the depth of the  recursion tree.
+//Space complexity is O(n) for the recusion stack call
+#include<iostream>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+int f(int x,vector<int> &coins) {
+    if(x == 0) return 0;//Base case
+    if(x<0) return INT_MAX;
+    int number = INT_MAX;
+
+    for(int coin:coins){
+        int sub = f(x-coin,coins);//Finding the value of subproblem if it goies beyond INT_MAX, we dont let it overflow with INT_MAX + 1.
+        //So we will check if it is
+        if(sub != INT_MAX){
+            number = min(number,sub + 1);//Adding 1 everytime we usea a coin.
+        }
+    }
+    return number;
+     
+}
+
+int main() {
+    int n; //number of coins.
+    int x; //desired sum.
+    cin>>n;
+    cin>>x;
+    vector<int> coins(n);
+    //Taking input of the coins array that is t coins available(on 0 based indexing)
+    for(int i = 0;i<n;i++){
+        cin>>coins[i];
+    }
+    int result = f(x,coins);
+    if(result == INT_MAX){
+        cout<<-1;
+    }else{
+        cout<<result;
+    }
+}
+
+
+
+*************************************************************************************************************************************************************************************************
+
+
+//This is memoization for Minimizing the Coins
+//The braching factor in the recursion tree is the number of coins Hence Time complexity is O(n^n) beleiving the n is the depth of the  recursion tree.
+//Space complexity is O(n) for the recusion stack call
+//TC = O(x) x = length of dp array which is also the sum
+//SC = O(n) (for recursion stack call)
+#include<iostream>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+int f(int x,vector<int> &coins,vector<int>& dp) {
+    if(x == 0) return 0;//Base case
+    if(x<0) return INT_MAX;
+    int number = INT_MAX;
+    if(dp[x] != -1) return dp[x];
+    for(int coin:coins){
+        int sub = f(x-coin,coins,dp);//Finding the value of subproblem if it goies beyond INT_MAX, we dont let it overflow with INT_MAX + 1.
+        //So we will check if it is
+
+        if(sub != INT_MAX){
+            number = min(number,sub + 1);//Adding 1 everytime we usea a coin.
+        }
+    }
+    dp[x] = number;
+    return number;
+     
+}
+
+int main() {
+    int n; //number of coins.
+    int x; //desired sum.
+    cin>>n;
+    cin>>x;
+    vector<int> coins(n);
+    //Taking input of the coins array that is t coins available(on 0 based indexing)
+    for(int i = 0;i<n;i++){
+        cin>>coins[i];
+    }
+    
+    vector<int> dp(x+1,-1);
+    int result = f(x,coins,dp);
+    if(result == INT_MAX){
+        cout<<-1;
+    }else{
+        cout<<result;
+    }
+}
+
+
+***********************************************************************************************************************************************************************************************
+
+
+
+
