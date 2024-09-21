@@ -1,0 +1,64 @@
+//This is memoization for Dice combination
+//TC = O(n)
+//SC = O(n)(Recursion stack call and dp vector)
+#include<iostream>
+#include<string>
+#include<vector>
+
+using namespace std; 
+
+const int mod = 1000000007;
+
+int f(int n,vector<int> &dp){
+    if(n==1 || n==0) return 1;//Base case
+    if(n<0) return 0;//Invalid case
+    if(dp[n]!=-1) return dp[n];
+    int ways = 0;
+    for(int i = 1;i<=6;i++){
+        ways = (ways+f(n-i,dp))%mod;
+    }
+    dp[n] = ways;
+    return ways;
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int>dp(n+1,-1);
+    int result = f(n,dp);
+    cout<<result;
+}
+
+*************************************************************************************************************************************************************************************************
+
+//This is Tabulation for Dice Combination
+//TC = O(n)(only 1 for loop the inner for loop works only or 6 times so O(6n) = O(n))
+//SC = O(n)(vector space of dp)
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int mod = 1e9 + 7;
+
+int f(int n) {
+    vector<int> dp(n + 1, 0);  
+    dp[0] = 1;  
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= 6; j++) {
+            if (i - j >= 0) {
+                dp[i] = (dp[i] + dp[i - j]) % mod;  
+            }
+        }
+    }
+    return dp[n];  
+}
+
+int main() {
+    int n;
+    cin >> n;
+    int result = f(n);
+    cout << result << endl;
+}
+
+
