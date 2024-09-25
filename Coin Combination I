@@ -8,12 +8,14 @@
 
 using namespace std;
 
+cont int mod = 1e9  + 7;
+
 int f(int x,vector<int> &coins) {
     if(x == 0) return 1;
     if(x<0) return 0;
     int ways = 0;
     for(int coin:coins){
-        ways = ways + f(x-coin,coins);
+        ways = (ways + f(x-coin,coins))%mod;
     }  
     return ways;
 }
