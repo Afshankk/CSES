@@ -1,3 +1,37 @@
+//This is Recursion for Dice combination
+//TC = O(6^n) 6 is the branching factor and n is the depth of recusion tree on worst case
+//SC = O(n)(Recursion stack call)
+#include<iostream>
+#include<string>
+#include<vector>
+
+using namespace std; 
+
+const int mod = 1000000007;
+
+int f(int n) {
+    if(n == 1 || n == 0) return 1; // Base case
+    if(n < 0) return 0; // Invalid case
+    
+    int ways = 0;
+    for(int i = 1; i <= 6; i++) {
+        ways += f(n - i);
+    }
+    return ways;
+}
+
+
+int main(){
+    int n;
+    cin>>n;
+    int result = f(n);
+    cout<<result;
+}
+
+
+********************************************************************************************************************************************************************************************************
+
+
 //This is memoization for Dice combination
 //TC = O(n)
 //SC = O(n)(Recursion stack call and dp vector)
