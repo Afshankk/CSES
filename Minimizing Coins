@@ -1,6 +1,6 @@
 //This is Recursion for Minimizing the Coins
 //The braching factor in the recursion tree is the number of coins Hence Time complexity is O(n^n) beleiving the n is the depth of the  recursion tree.
-//Space complexity is O(n) for the recusion stack call
+//SC = O(n) for the recusion stack call
 #include<iostream>
 #include<vector>
 #include<climits>
@@ -50,7 +50,7 @@ int main() {
 //The braching factor in the recursion tree is the number of coins Hence Time complexity is O(n^n) beleiving the n is the depth of the  recursion tree.
 //Space complexity is O(n) for the recusion stack call
 //TC = O(x) x = length of dp array which is also the sum
-//SC = O(n) (for recursion stack call)
+//SC = O(n) (for recursion stack call + dp vector)
 #include<iostream>
 #include<vector>
 #include<climits>
