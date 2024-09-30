@@ -1,0 +1,100 @@
+//This is Recursion for Removing Digits.
+//TC = O(9^d)(n is depth of recusion tree and we are taking worst case possible that it can have all 9 digits as branch that is the digit have all the 9 digits present in it)
+//SC = O(n) (Recursion call stack)
+#include<iostream>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+
+const int mod = 1e9 + 7;
+
+int f(int n) {
+    if(n == 0) return 0;
+    if(n<0) return INT_MAX;
+
+    vector<int> digits;
+    
+    int temp = n;
+
+    while (temp > 0) {
+        int digit = temp % 10;
+        temp /= 10;
+        if (digit != 0) {
+            digits.push_back(digit);
+        }
+    }
+
+    int ways = INT_MAX;
+    for (int digit : digits) {
+        int subproblem_result = f(n - digit);
+        if (subproblem_result != INT_MAX) { // Only consider valid solutions
+            ways = min(ways, subproblem_result + 1); 
+        }
+    }
+
+    return ways; 
+}
+
+int main() {
+    int n; //number to be checked
+    cin>>n;
+    int result = f(n);
+    cout<<result;
+}
+
+*************************************************************************************************************************************************
+
+//This is Memoization for Removing Digits.
+//TC = O(n*logn)
+//For each number n, you extract the digits of n (up to 9 digits, since a number can only have non-zero digits between 1 and 9).
+//Extracting these digits takes O(d) where d is the number of digits in n.
+//In the worst case, d can be the number of digits in n, which is approximately log10(n) (i.e., log n in terms of time complexity).
+
+//SC = O(n)(Recusion call stack and dp vector).
+#include<iostream>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+
+const int mod = 1e9 + 7;
+vector<int> dp;
+
+int f(int n) {
+
+    if(n == 0) return 0;
+    if(n<0) return INT_MAX;
+    if(dp[n]!=-1) return dp[n];
+    vector<int> digits;
+    
+    int temp = n;
+
+    while (temp > 0) {
+        int digit = temp % 10;
+        temp /= 10;
+        if (digit != 0) {
+            digits.push_back(digit);
+        }
+    }
+
+    int ways = INT_MAX;
+    for (int digit : digits) {
+        int subproblem_result = f(n - digit);
+        if (subproblem_result != INT_MAX) { // Only consider valid solutions
+            ways = min(ways, subproblem_result + 1); 
+        }
+    }
+    return dp[n] = ways; 
+}
+
+int main() {
+    int n; //number to be checked
+    cin>>n;
+    // Initialize dp array with -1
+    dp.resize(n + 1, -1);
+    int result = f(n);
+    cout<<result;
+}
