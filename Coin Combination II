@@ -1,0 +1,44 @@
+//This is Tabulation for Coin Combination II.
+// TC = O(n*x)(Two for loop)
+// SC = O(x)(for dp vector)
+#include<iostream>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+//To have unique combinations, we will first make a dp array where dp[x] shows the number of possible way to have x as sum of the coins.
+//To do so we will take each coin and make all the  possible combination using that coin only and then add these to other.
+// while being on coins[i]
+// dp[w] = dp[w] + dp[w-coins[i]]
+// where w goes from coin[i] to the x(required sum)
+
+const int mod = 1e9 + 7;
+
+int f(int x, const vector<int> &coins) {
+    vector<int> dp(x+1,0);
+    dp[0] = 1;
+    
+    for(int i = 0;i<=coins.size();i++){
+        for(int j = coins[i];i<=x;j++){
+            dp[j] = dp[j] + dp[j-coins[i]];
+        }
+    }
+    return dp[x];
+}
+
+int main() {
+    int n; //number of coins.
+    int x; //desired sum.
+    cin>>n;
+    cin>>x;
+    vector<int> coins(n);
+    for(int i = 0;i<n;i++){
+        cin>>coins[i];
+    }
+    
+    int result = f(x,coins);
+    cout<<result;
+}
+
+
