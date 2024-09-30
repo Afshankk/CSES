@@ -15,13 +15,13 @@ using namespace std;
 
 const int mod = 1e9 + 7;
 
-int f(int x, const vector<int> &coins) {
-    vector<int> dp(x+1,0);
+int f(int x, const vector<int> &coins,int n) {
+    vector<int> dp(x + 1, 0);
     dp[0] = 1;
     
-    for(int i = 0;i<=coins.size();i++){
-        for(int j = coins[i];i<=x;j++){
-            dp[j] = dp[j] + dp[j-coins[i]];
+    for (int i = 0; i < n; i++) {
+        for (int j = coins[i]; j <= x; j++) {
+            dp[j] = (dp[j] + dp[j - coins[i]]) % mod;
         }
     }
     return dp[x];
@@ -36,9 +36,6 @@ int main() {
     for(int i = 0;i<n;i++){
         cin>>coins[i];
     }
-    
-    int result = f(x,coins);
+    int result = f(x,coins,n);
     cout<<result;
 }
-
-
